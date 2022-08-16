@@ -9,21 +9,17 @@ exports.register = async (req, res, next) => {
       email,
       password,
     });
-    res.status(201).json({
-      success: true,
-      user,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+
+    sendToken(user, 200, res);
+  } catch (err) {
+    next(err);
   }
 };
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
+  // Check if email and password is provided
   if (!email || !password) {
     return next(new ErrorResponse("Please provide an email and password", 400));
   }
@@ -34,26 +30,25 @@ exports.login = async (req, res, next) => {
     if (!user) {
       return next(new ErrorResponse("Invalid credentials", 401));
     }
-
     const isMatch = await user.matchPassword(password);
-
     if (!isMatch) {
       return next(new ErrorResponse("Invalid credentials", 401));
     }
-
-    res.status(200).json({
-      success: true,
-      token: "asdadad",
-    });
+    sendToken(user, 200, res);
   } catch (err) {
     next(err);
   }
 };
 
-exports.forgotpassword = (req, res, next) => {
-  res.send("forgotPassword Route");
-};
+// exports.forgotpassword = (req, res, next) => {
+//   res.send("forgotPassword Route");
+// };
 
-exports.resetpassword = (req, res, next) => {
-  res.send("resetPassword Route");
+// exports.resetpassword = (req, res, next) => {
+//   res.send("resetPassword Route");
+// };
+
+const sendToken = (user, statusCode, res) => {
+  const token = user.getSignedJwtToken();
+  res.status(statusCode).json({ sucess: true, token });
 };
