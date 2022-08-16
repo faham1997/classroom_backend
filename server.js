@@ -4,6 +4,9 @@ const app = express();
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
 
+var cors = require("cors");
+app.use(cors());
+
 connectDB();
 
 app.use(express.json());
