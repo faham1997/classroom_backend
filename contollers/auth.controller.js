@@ -13,6 +13,7 @@ exports.register = async (req, res) => {
     await User.create({
       name: req.body.name,
       email: req.body.email,
+      profession: req.body.profession,
       password: newPassword,
     });
     res.json({ status: "ok" });
