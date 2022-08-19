@@ -41,6 +41,8 @@ exports.login = async (req, res) => {
       {
         name: user.name,
         email: user.email,
+        profession: user.profession,
+        id: user.id,
       },
       "secret123"
     );

@@ -17,7 +17,6 @@ exports.info = async (req, res) => {
     return res.json({
       status: "ok",
       name: user.name,
-      profession: user.profession,
     });
   } catch (error) {
     console.log(error);
