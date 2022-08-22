@@ -7,7 +7,6 @@ const User = require("../models/user.model");
 
 exports.createCourse = async (req, res) => {
   try {
-    console.log(req.body);
     course = new Course({
       name: req.body.name,
       description: req.body.description,

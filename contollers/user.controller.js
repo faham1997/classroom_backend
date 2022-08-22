@@ -10,13 +10,11 @@ exports.info = async (req, res) => {
   const token = req.headers["x-access-token"];
 
   try {
-    const decoded = jwt.verify(token, "secret123");
-    const email = decoded.email;
+    const email = jwt.verify(token, "secret123").email;
     const user = await User.findOne({ email: email });
-
     return res.json({
       status: "ok",
-      name: user.name,
+      user,
     });
   } catch (error) {
     console.log(error);
